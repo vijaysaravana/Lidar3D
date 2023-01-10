@@ -17,6 +17,9 @@ python test.py --cfg_file pointpillar.yaml
 
 It is also the official code release of [`[PointRCNN]`](https://arxiv.org/abs/1812.04244), [`[Part-A^2 net]`](https://arxiv.org/abs/1907.03670) and [`[PV-RCNN]`](https://arxiv.org/abs/1912.13192). 
 
+## Model Inference Pipeline
+
+![Architecture Diagram](https://user-images.githubusercontent.com/16526627/211655233-ca888f6f-87a4-483b-b686-224d3227689e.png)
 
 
 
