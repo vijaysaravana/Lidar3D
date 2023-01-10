@@ -62,6 +62,8 @@ Step 6: We will use the OpenPCDet codebase to perform the [MO](https://github.co
 
 ## Model Performance
 
+Online and Offline object detection outputs along with RAW video footage can be seen in the outputs folder.
+
 ### Online object detection with frame dropping
 
 #### 1 Edge (NCS2 Stick) device
