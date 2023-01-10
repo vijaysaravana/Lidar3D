@@ -62,17 +62,50 @@ Step 6: We will use the OpenPCDet codebase to perform the [MO](https://github.co
 
 ## Model Performance
 
-### 1 Edge (NCS2 Stick) device
+### Online object detection with frame dropping
+
+#### 1 Edge (NCS2 Stick) device
 
 FPS : 0.32
 
 ![pcl_1_ncs_framedrop](https://user-images.githubusercontent.com/16526627/211661189-7ce74c3c-17e4-4ffc-8a9b-44a5c0560116.gif)
 
-### 2 Edge (NCS2 Stick) devices
+#### 2 Edge (NCS2 Stick) devices
 
 FPS : 0.66
 
 ![pcl_2_ncs_framedrop](https://user-images.githubusercontent.com/16526627/211661259-60fa55ce-76c9-4fa4-9d1f-7c1f9142b77a.gif)
 
+We can see that the model performs well ~58.97 mAP (mean Average Precision for Car/easy and 26.06 mAP overall.
 
+According to the KiTTi dataset, easy is characterized by large bounding boxes and less occlusion and obstacles for object detection.
 
+![Table](https://user-images.githubusercontent.com/16526627/211667696-603e836c-f495-4e75-a319-a4b0be02faae.png)
+
+As the complexity increases (small/ distant object with obstacles) or for less common objects like cyclists - our model struggles to perform.
+
+![image](https://user-images.githubusercontent.com/16526627/211667830-764fcdfa-7e72-4524-84e0-93d21b3abe49.png)
+
+#### Easy vs Hard Scenes
+
+![image](https://user-images.githubusercontent.com/16526627/211667858-431d4b69-9432-42ab-adda-211ceb427777.png)
+
+## Conclusion
+
+- Our model performs well for easy car scenes in the KiTTi dataset with a mAP of 58.
+- This is a pretty good score considering we have significantly reduced the number of voxels/ features from 12000 to 100 in a stacked pointpillar to fit the model into Intel NCS Myriad stick.
+- The overall mAP is however low (~26) due to the class imbalance in the training data - most of the scenes contain cars and the occurrence of pedestrians and cyclists are less.
+- We will be able to fix this by using data imbalance handling algorithm like SMOTE algorithm.
+- LiDAR detects all the obstacles, and we can see a lot of false positives – these can be removed/ optimized by tuning the inference by adjusting various parameters by running experiments.
+- We will further tweak the model inference by playing around with NMS thresholds, number of features etc. to improve the model performance.
+- We can see that the model inference time improves ~2x when another NCS2 device is added. This is possible due to OpenVINO optimization for multi stick configuration. We will experiment with more devices in the future as shows in EVA paper.
+
+## References
+
+OpenPCDet : https://github.com/open-mmlab/OpenPCDet
+
+Fast EVA : https://github.com/git-disl/EVA
+
+Intel OpenVINO Pointpillars : https://github.com/intel/OpenVINO-optimization-for-PointPillars
+
+Nutomy Pointpillars : https://github.com/SmallMunich/nutonomy_pointpillars
